@@ -1,11 +1,13 @@
-package org.spring.catalogservice;
+package org.tacos;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PolarsophiaApplicationTests {
-	@Test
-	void contextLoads() {
-	}
+class TacoCloudApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
 }
