@@ -16,10 +16,16 @@
         </li>
     </ul>
     <h3>Deliver my taco masterpieces to...</h3>
-    <label for="deliveryName">Name: </label> <input type="text" th:field="*{deliveryName}"/> <br/>
-    <label for="deliveryZip">Zip code: </label> <input type="text" th:field="*{deliveryZip}"/> <br/>
+    <label for="deliveryName">Name: </label> <input type="text" th:field="*{deliveryName}"/>
+    <span class="validationError" th:if="${#fields.hasErrors('deliveryName')}" th:errors="*{deliveryName}"></span>
+    <br/>
+    <label for="deliveryZip">Zip code: </label> <input type="text" th:field="*{deliveryZip}"/>
+    <span class="validationError" th:if="${#fields.hasErrors('deliveryZip')}" th:errors="*{deliveryZip}"></span>
+    <br/>
     <h3>Here's how I'll pay...</h3>
-    <label for="upiId">UPI Id: </label> <input type="text" th:field="*{upiId}"/> <br/><br/>
+    <label for="upiId">UPI Id: </label> <input type="text" th:field="*{upiId}"/>
+    <span class="validationError" th:if="${#fields.hasErrors('upiId')}" th:errors="*{upiId}"></span>
+    <br/><br/>
     <input type="submit" value="Submit Order"/> </form>
 </body>
 </html>
