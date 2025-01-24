@@ -11,6 +11,7 @@ import org.tacos.models.Ingredient;
 import org.tacos.models.Ingredient.Type;
 import org.tacos.models.Taco;
 import org.tacos.models.TacoOrder;
+import org.tacos.repositories.IngredientRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,20 +22,15 @@ import java.util.stream.Collectors;
 @SessionAttributes("tacoOrder")
 public class DesignTacoController {
     private final Logger log = LoggerFactory.getLogger(DesignTacoController.class);
+    private final IngredientRepository ingredientRepository;
+
+    public DesignTacoController(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
+    }
+
     @ModelAttribute
     public void addIngredientsToModel(Model model){
-        List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("FLTO", "Flour Tortilla", Ingredient.Type.WRAP),
-                new Ingredient("COTO", "Corn Tortilla", Ingredient.Type.WRAP),
-                new Ingredient("GRBF", "Ground Beef", Ingredient.Type.PROTEIN),
-                new Ingredient("CARN", "Carnitas", Ingredient.Type.PROTEIN),
-                new Ingredient("TMTO", "Diced Tomatoes", Ingredient.Type.VEGGIES),
-                new Ingredient("LETC", "Lettuce", Ingredient.Type.VEGGIES),
-                new Ingredient("CHED", "Cheddar", Ingredient.Type.CHEESE),
-                new Ingredient("JACK", "Monterrey Jack", Ingredient.Type.CHEESE),
-                new Ingredient("SLSA", "Salsa", Ingredient.Type.SAUCE),
-                new Ingredient("SRCR", "Sour Cream", Ingredient.Type.SAUCE)
-        );
+        List<Ingredient> ingredients = ingredientRepository.findAll();
         Type[] types = Ingredient.Type.values();
         for(Type type : types){
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
