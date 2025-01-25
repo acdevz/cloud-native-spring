@@ -1,28 +1,30 @@
-create table if not exists ingredient(
-    id varchar(4) not null primary key,
-    name varchar(25) not null,
-    type varchar(10) not null
+CREATE TABLE IF NOT EXISTS INGREDIENT (
+    ID VARCHAR(4) NOT NULL PRIMARY KEY,
+    NAME VARCHAR(25) NOT NULL,
+    TYPE VARCHAR(10) NOT NULL
 );
 
-create table if not exists taco_order(
-     id identity primary key,
-     delivery_name varchar(25) not null,
-     delivery_zip varchar(10) not null,
-     upiId varchar(20) not null,
-     placed_at timestamp not null
+CREATE TABLE IF NOT EXISTS TACO_ORDER (
+    ID IDENTITY PRIMARY KEY,
+    DELIVERY_NAME VARCHAR(25) NOT NULL,
+    DELIVERY_ZIP VARCHAR(10) NOT NULL,
+    UPI_ID VARCHAR(20) NOT NULL,
+    PLACED_AT TIMESTAMP NOT NULL
 );
 
-create table if not exists taco(
-    id identity primary key,
-    name varchar(25) not null,
-    createdAt timestamp not null,
-    taco_order bigint not null,
-    foreign key (taco_order) references taco_order(id)
+CREATE TABLE IF NOT EXISTS TACO (
+    ID IDENTITY PRIMARY KEY,
+    NAME VARCHAR(25) NOT NULL,
+    CREATED_AT TIMESTAMP NOT NULL,
+    TACO_ORDER BIGINT NOT NULL,
+    TACO_ORDER_KEY BIGINT NOT NULL,
+    FOREIGN KEY (TACO_ORDER) REFERENCES TACO_ORDER(ID)
 );
 
-create table if not exists ingredient_ref(
-    taco bigint not null,
-    ingredient varchar(4) not null,
-    foreign key (taco) references taco(id),
-    foreign key (ingredient) references ingredient(id)
+CREATE TABLE IF NOT EXISTS INGREDIENT_REF (
+    TACO BIGINT NOT NULL,
+    TACO_KEY BIGINT NOT NULL,
+    INGREDIENT VARCHAR(4) NOT NULL,
+    FOREIGN KEY (INGREDIENT) REFERENCES INGREDIENT(ID),
+    FOREIGN KEY (TACO) REFERENCES TACO(ID)
 );

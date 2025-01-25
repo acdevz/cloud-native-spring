@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.tacos.models.Ingredient;
 import org.tacos.repositories.IngredientRepository;
 
+// Not needed when mapping String value to IngredientRef object, not Ingredient object! ⭐
 @Component
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
     private final IngredientRepository ingredientRepository;
