@@ -1,29 +1,29 @@
 package org.tacos.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.NoArgsConstructor;
 
 @Data
-@Table
-public class Ingredient implements Persistable<String> {
+@Entity
+public class Ingredient {
     @Id
     private String id;
     private String name;
     private Type type;
 
-    @Override
-    public boolean isNew() {
-        return true;
-    }
-
     public enum Type {
         WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
     }
-    public Ingredient(String id, String name, Type type) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
+
+    public static Ingredient of(String id, String name, Type type) {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(id);
+        ingredient.setName(name);
+        ingredient.setType(type);
+        return ingredient;
     }
 }
