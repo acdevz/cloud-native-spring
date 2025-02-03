@@ -1,0 +1,34 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: TacoCloud
+  thymeleaf.cache: false
+  datasource:
+    generate-unique-name: false
+    name: tacoCloud
+    username: acdevs
+    password: 4444
+
+taco:
+  orders:
+    pageSize: 10
+
+# embedded server and key certificates
+#server:
+#  port: 8443
+#  ssl:
+#    key-store: mykey.jks
+#    key-password: tooshort
+#    key-store-password: tooshort
+
+# debug logging
+logging:
+  file:
+    path: /logs
+    name: TacoCloud.log
+  level:
+    root: info
+
+---
+

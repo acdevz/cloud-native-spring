@@ -60,7 +60,7 @@ public class SecurityConfig{
                 )
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/design", "/orders", "/orders/").hasRole("USER")
+                                .requestMatchers("/design", "/orders", "/orders/**").hasRole("USER")
                                 .requestMatchers("/", "/**").permitAll()
                 )
                 .formLogin(formLogin ->

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Past Order | TacoCloud</title>
+  <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body>
+  <h1>Your Order History! 🌮</h1>
+  <form method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout"/>
+  </form>
+  <h3>Your tacos in this order:</h3>
+  <ul>
+    <li th:each="order : ${orders}">
+      <span th:text="${order.placedAt}"></span>
+      <ul>
+        <li th:each="taco : ${order.tacos}">
+          <span th:text="${taco.name}"></span>
+          <ul>
+            <li th:each="ingreds : ${taco.getIngredients()}">
+              <span th:text="${ingreds.getName()}"></span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</body>
+</html>

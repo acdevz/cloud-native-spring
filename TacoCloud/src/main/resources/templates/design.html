@@ -10,6 +10,8 @@
     <form method="POST" th:action="@{/logout}">
         <input type="submit" value="Logout"/>
     </form>
+    <a th:href="@{/orders/history}">View past orders.</a>
+    <br/>
     <form method="POST" th:action="@{/design}" th:object="${taco}">
         <div class="grid">
             <div class="ingredient-group" id="wraps">

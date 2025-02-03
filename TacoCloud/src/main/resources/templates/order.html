@@ -6,11 +6,11 @@
     <link rel="stylesheet" th:href="@{/styles.css}" />
 </head>
 <body>
-<form method="POST" th:action="@{/orders}" th:object="${tacoOrder}">
     <h1>Order your taco creations! 🌮</h1>
     <form method="POST" th:action="@{/logout}">
         <input type="submit" value="Logout"/>
     </form>
+    <form method="POST" th:action="@{/orders}" th:object="${tacoOrder}">
     <h3>Your tacos in this order:</h3>
     <a th:href="@{/design}" id="another">Design another taco</a><br/>
     <ul>
@@ -19,16 +19,17 @@
         </li>
     </ul>
     <h3>Deliver my taco masterpieces to...</h3>
-    <label for="deliveryName">Name: </label> <input type="text" th:field="*{deliveryName}"/>
+    <label for="deliveryName">Name: </label> <input type="text" th:field="*{deliveryName}" id="deliveryName"/>
     <span class="validationError" th:if="${#fields.hasErrors('deliveryName')}" th:errors="*{deliveryName}"></span>
     <br/>
-    <label for="deliveryZip">Zip code: </label> <input type="text" th:field="*{deliveryZip}"/>
+    <label for="deliveryZip">Zip code: </label> <input type="text" th:field="*{deliveryZip}" id="deliveryZip"/>
     <span class="validationError" th:if="${#fields.hasErrors('deliveryZip')}" th:errors="*{deliveryZip}"></span>
     <br/>
     <h3>Here's how I'll pay...</h3>
-    <label for="upiId">UPI Id: </label> <input type="text" th:field="*{upiId}"/>
+    <label for="upiId">UPI Id: </label> <input type="text" th:field="*{upiId}" id="upiId"/>
     <span class="validationError" th:if="${#fields.hasErrors('upiId')}" th:errors="*{upiId}"></span>
     <br/><br/>
-    <input type="submit" value="Submit Order"/> </form>
+    <input type="submit" value="Submit Order"/>
+    </form>
 </body>
 </html>

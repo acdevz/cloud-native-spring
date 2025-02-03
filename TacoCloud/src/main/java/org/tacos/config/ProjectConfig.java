@@ -3,12 +3,14 @@ package org.tacos.config;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.tacos.models.Ingredient;
 import org.tacos.repositories.IngredientRepository;
 
 @Configuration
 public class ProjectConfig {
     @Bean
+    @Profile("dev")
     public ApplicationRunner dataLoader(IngredientRepository repo) {
         return (args) -> {
             repo.save(Ingredient.of("FLTO", "Flour Tortilla", Ingredient.Type.WRAP));
