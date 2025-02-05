@@ -12,4 +12,6 @@ public interface IngredientRepository extends CrudRepository<Ingredient, String>
     Optional<Ingredient> findById(String id);
 
     Ingredient save(Ingredient ingredient);
+
+    Optional<Ingredient> getIngredientById(String id);
 }

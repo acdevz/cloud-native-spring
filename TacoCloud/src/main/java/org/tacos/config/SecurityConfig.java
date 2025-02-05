@@ -56,7 +56,7 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf ->
-                        csrf.ignoringRequestMatchers("/h2-console/**")
+                        csrf.ignoringRequestMatchers("/h2-console/**", "/api/**")
                 )
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
