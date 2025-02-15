@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: dev
+
   application:
     name: TacoCloud
   thymeleaf.cache: false
@@ -10,13 +11,25 @@ spring:
     username: acdevs
     password: 4444
 
+  security:
+    oauth2:
+      resource server:
+        jwt:
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
+
 taco:
   orders:
     pageSize: 10
 
 # embedded server and key certificates
-#server:
-#  port: 8443
+server:
+  port: 8080
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 10s
+    threads:
+      max: 10
+      min-spare: 5
 #  ssl:
 #    key-store: mykey.jks
 #    key-password: tooshort
