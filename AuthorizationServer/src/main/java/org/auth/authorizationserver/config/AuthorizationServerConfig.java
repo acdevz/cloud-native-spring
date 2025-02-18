@@ -21,8 +21,10 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -38,7 +40,8 @@ public class AuthorizationServerConfig {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .with(OAuth2AuthorizationServerConfigurer.authorizationServer(), Customizer.withDefaults())
+                .with(OAuth2AuthorizationServerConfigurer.authorizationServer(), authServer ->
+                        authServer.oidc(Customizer.withDefaults()))
                 .authorizeHttpRequests(authorizeRequest ->
                         authorizeRequest.anyRequest().authenticated()
                 )
@@ -47,20 +50,28 @@ public class AuthorizationServerConfig {
     }
 
     @Bean
+    public AuthorizationServerSettings authorizationServerSettings(){
+        return AuthorizationServerSettings.builder().build();
+    }
+
+    @Bean
     public RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder) {
         RegisteredClient registeredClient =
                 RegisteredClient.withId(UUID.randomUUID().toString())
                         .clientId("taco-admin-client")
                         .clientSecret(passwordEncoder.encode("secret"))
-                        .clientAuthenticationMethod(
-                                ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                        .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                         .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                        .redirectUri("http://127.0.0.1:9090/login/oauth2/code/taco-admin-client")
+                        .redirectUri("http://localhost:9090/login/oauth2/code/taco-admin-client")
                         .scope("writeIngredients")
                         .scope("deleteIngredients")
+                        .scope("viewIngredients")
                         .scope(OidcScopes.OPENID)
-                        .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+                        .clientSettings(ClientSettings.builder()
+                                .requireAuthorizationConsent(true)
+                                .requireProofKey(false)
+                                .build())
                 .build();
         return new InMemoryRegisteredClientRepository(registeredClient);
     }

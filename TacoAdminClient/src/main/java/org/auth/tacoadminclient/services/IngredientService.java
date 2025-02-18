@@ -5,4 +5,6 @@ import org.auth.tacoadminclient.models.Ingredient;
 public interface IngredientService {
     Iterable<Ingredient> findAll();
     Ingredient addIngredient(Ingredient ingredient);
+    String getAccessToken();
+    void deleteIngredient(String id);
 }

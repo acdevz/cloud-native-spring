@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Taco Cloud</title>
+</head>
+
+<body>
+    <h2>Taco Cloud Admin: Ingredients</h2>
+    <form method="POST" th:action="@{/admin/ingredients}" th:object="${ingredient}">
+        <label for="id">ID: </label>
+        <input type="text" name="id" id="id" th:field="*{id}"/>
+        <span class="error-message" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+        <br/>
+
+        <label for="name">Name: </label>
+        <input type="text" name="name" id="name" th:field="*{name}"/>
+        <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        <br/>
+
+        <label for="type">Type: </label>
+        <select name="type" id="type">
+            <option value="WRAP">Wrap</option>
+            <option value="PROTEIN">Protein</option>
+            <option value="VEGGIES">Veggies</option>
+            <option value="CHEESE">Cheese</option>
+            <option value="SAUCE">Sauce</option>
+        </select>
+        <br/>
+        <input type="submit" value="Create" />
+    </form>
+    <hr/>
+    <ul>
+        <li th:each="ingredient: ${ingredients}" th:data-ingredientid="${ingredient.getId()}">
+            <span th:text="${ingredient.name}"> </span>
+            <form style="display: inline" method="POST" th:action="@{/admin/ingredients/deleteIngredient(id=${ingredient.id})}">
+                <input type="submit" value="Delete" />
+            </form>
+        </li>
+    </ul>
+    <p th:if="${error}" class="error-message" th:text="${error}"></p>
+    <style>
+        .error-message {
+            color: #ff5757;
+            font-size: 0.9em;
+        }
+    </style>
+</body>
+</html>

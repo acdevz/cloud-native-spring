@@ -4,15 +4,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.tacos.models.Ingredient;
+import org.tacos.models.Taco;
 import org.tacos.repositories.IngredientRepository;
+import org.tacos.repositories.TacoRepository;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/ingredients", produces = "application/json")
+@CrossOrigin("http://localhost:9090")
 public class IngredientsController {
     private final IngredientRepository ingredientRepository;
+    private final TacoRepository tacoRepository;
 
-    public IngredientsController(IngredientRepository ingredientRepository) {
+    public IngredientsController(IngredientRepository ingredientRepository, TacoRepository tacoRepository) {
         this.ingredientRepository = ingredientRepository;
+        this.tacoRepository = tacoRepository;
     }
 
     @GetMapping()
@@ -23,7 +30,7 @@ public class IngredientsController {
     @GetMapping("/{id}")
     public ResponseEntity<Ingredient> getIngredientById(
             @PathVariable String id
-    ){
+    ) {
         return ingredientRepository.getIngredientById(id)
                 .map(ingredient -> new ResponseEntity<Ingredient>(ingredient, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<Ingredient>(HttpStatus.BAD_REQUEST));
@@ -43,6 +50,11 @@ public class IngredientsController {
     public void deleteIngredient(
             @PathVariable String id
     ){
+        Ingredient ingredient = ingredientRepository.findById(id).orElseGet(() -> null);
+        tacoRepository.findAll().forEach(taco -> {
+            taco.getIngredients().remove(ingredient);
+            tacoRepository.save(taco);
+        });
         ingredientRepository.deleteById(id);
     }
 }

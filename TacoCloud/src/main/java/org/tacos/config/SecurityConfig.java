@@ -63,6 +63,7 @@ public class SecurityConfig{
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
+                                .requestMatchers(HttpMethod.GET, "/api/ingredients").hasAuthority("SCOPE_viewIngredients")
                                 .requestMatchers(HttpMethod.POST, "/api/ingredients").hasAuthority("SCOPE_writeIngredients")
                                 .requestMatchers(HttpMethod.DELETE, "/api/ingredients/{id}").hasAuthority("SCOPE_deleteIngredients")
                                 .requestMatchers("/design", "/orders", "/orders/**").hasRole("USER")
