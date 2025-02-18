@@ -16,12 +16,12 @@ spring:
               - profile
               - openid
 
-          taco-admin-client:
+          myAuthorizationServer:
             provider: tacoCloud
             client-id: taco-admin-client
             client-secret: secret
             authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:9090/login/oauth2/code/taco-admin-client"
+            redirect-uri: "http://localhost:9090/login/oauth2/code/myAuthorizationServer"
             scope:
               - writeIngredients
               - deleteIngredients

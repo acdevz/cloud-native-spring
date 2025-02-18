@@ -7,6 +7,13 @@
     <h2>Taco Cloud Admin</h2>
     <ul>
         <li><a th:href="@{/admin/ingredients}">Manage Ingredients</a></li>
+        <p th:if="${error}" class="error-message" th:text="${error}"></p>
+        <style>
+            .error-message {
+                color: #ff5757;
+                font-size: 0.9em;
+            }
+        </style>
     </ul>
 </body>
 </html>
