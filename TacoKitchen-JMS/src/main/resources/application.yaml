@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: TacoCloud
+
+  jms:
+    template:
+      receive-timeout: 2500
+  artemis:
+    broker-url: tcp://localhost:61616
+    user: acdevs
+    password: 4444
+    embedded:
+      enabled: false
+
+server:
+  port: 8000
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 10s
+    threads:
+      max: 10
+      min-spare: 5

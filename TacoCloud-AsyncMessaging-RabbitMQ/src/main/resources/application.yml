@@ -26,6 +26,7 @@ spring:
       exchange: tacocloud.orders.exchange
       routing-key: tacocloud.orders.routing.key
 
+
 taco:
   orders:
     pageSize: 10
@@ -51,6 +52,8 @@ logging:
     name: TacoCloud.log
   level:
     root: info
+
+
 
 ---
 

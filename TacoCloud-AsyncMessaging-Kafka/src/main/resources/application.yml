@@ -17,14 +17,13 @@ spring:
         jwt:
           jwk-set-uri: http://127.0.0.1:9000/oauth2/jwks
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: acdevs
-    password: 4444
+  kafka:
+    bootstrap-servers: localhost:9092
     template:
-      exchange: tacocloud.orders.exchange
-      routing-key: tacocloud.orders.routing.key
+      default-topic: tacocloud.orders.topic
+    producer:
+      keySerializer: org.springframework.kafka.support.serializer.JsonSerializer
+      valueSerializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 taco:
   orders:
@@ -51,6 +50,8 @@ logging:
     name: TacoCloud.log
   level:
     root: info
+
+
 
 ---
 

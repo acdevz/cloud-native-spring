@@ -1,0 +1,11 @@
+version: '3'
+services:
+  artemis:
+    image: apache/activemq-artemis:latest
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      - ARTEMIS_USER=acdevs
+      - ARTEMIS_PASSWORD=4444
+      - ANONYMOUS_LOGIN=true

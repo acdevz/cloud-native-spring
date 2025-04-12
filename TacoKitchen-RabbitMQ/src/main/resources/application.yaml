@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: TacoCloud
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: acdevs
+    password: 4444
+    template:
+      receive-timeout: 2500
+
+server:
+  port: 8000
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 10s
+    threads:
+      max: 10
+      min-spare: 5

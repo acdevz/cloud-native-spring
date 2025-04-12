@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Orders | Kitchen</title>
+</head>
+
+<body>
+<div th:if="${pendingOrdersCount == 0}">
+    <h1>All Orders fulfilled ✅</h1>
+    <p>Click the browser refresh to pull the next order.</p>
+</div>
+<div th:if="${pendingOrdersCount > 0}">
+    <h1>Orders left: <span th:text="${pendingOrdersCount}">0</span> 🌮</h1>
+    <h2>Order for <span th:text="${order.deliveryName}"></span></h2>
+    <h3>Deliver to:</h3>
+    <div>
+        <span th:text="${order.deliveryZip}">ZIP</span><br/>
+    </div>
+
+    <h3>Tacos:</h3>
+    <div th:each="taco : ${order.tacos}">
+        <b th:text="${taco.name}">TACO NAME</b><br/>
+        <ul>
+            <li th:each="ingredient : ${taco.ingredients}">
+                <span th:text="${ingredient.name}">INGREDIENT</span>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

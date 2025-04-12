@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: TacoCloud
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    template:
+      default-topic: tacocloud.orders.topic
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: tacocloud_kitchen
+      properties:
+        spring.json.trusted.packages: "*" # allow all packages
+
+server:
+  port: 8000
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 10s
+    threads:
+      max: 10
+      min-spare: 5
