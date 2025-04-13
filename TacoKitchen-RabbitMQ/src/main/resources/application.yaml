@@ -1,6 +1,11 @@
 spring:
   application:
-    name: TacoCloud
+    name: TacoKitchen
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:5000
 
   rabbitmq:
     host: localhost
@@ -18,3 +23,13 @@ server:
     threads:
       max: 10
       min-spare: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always

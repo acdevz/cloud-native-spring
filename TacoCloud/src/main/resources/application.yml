@@ -4,7 +4,9 @@ spring:
 
   application:
     name: TacoCloud
+
   thymeleaf.cache: false
+
   datasource:
     generate-unique-name: false
     name: tacoCloud
@@ -25,6 +27,17 @@ spring:
     template:
       exchange: tacocloud.orders.exchange
       routing-key: tacocloud.orders.routing.key
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:5000
+        username: admin
+        password: admin
+        instance:
+          metadata:
+            user.name: admin
+            user.password: admin
 
 # custom properties
 taco:
@@ -60,7 +73,7 @@ management:
       base-path: /actuator
       exposure:
         include: "*"
-        exclude: threadDump, heapDump, shutdown
+#        exclude: threadDump, heapDump, shutdown
   endpoint:
     health:
       show-details: always

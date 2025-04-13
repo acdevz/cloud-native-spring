@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: SpringBootAdminServer
+
+  security:
+    user:
+      name: admin
+      password: admin
+
+server:
+  port: 5000
