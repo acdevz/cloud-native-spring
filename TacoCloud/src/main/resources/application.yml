@@ -26,6 +26,7 @@ spring:
       exchange: tacocloud.orders.exchange
       routing-key: tacocloud.orders.routing.key
 
+# custom properties
 taco:
   orders:
     pageSize: 10
@@ -52,5 +53,27 @@ logging:
   level:
     root: info
 
----
+# actuator endpoints
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: "*"
+        exclude: threadDump, heapDump, shutdown
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+  info:
+    env:
+      enabled: true
+
+info:
+  name: TacoCloud
+  description: Tacos at your fingertips 🌮
+  contact:
+    phone: +91 9335273000
+    email: support@tacocloud.com
+
 

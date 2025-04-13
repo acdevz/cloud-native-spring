@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,17 +57,31 @@ public class SecurityConfig{
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf ->
-                        csrf.ignoringRequestMatchers("/h2-console/**", "/api/**")
-                )
+                .securityMatcher("/api/**")
+                .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers(HttpMethod.GET, "/api/ingredients").hasAuthority("SCOPE_viewIngredients")
                                 .requestMatchers(HttpMethod.POST, "/api/ingredients").hasAuthority("SCOPE_writeIngredients")
                                 .requestMatchers(HttpMethod.DELETE, "/api/ingredients/{id}").hasAuthority("SCOPE_deleteIngredients")
+                )
+                .build();
+    }
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(csrf ->
+                        csrf.ignoringRequestMatchers("/h2-console/**", "/api/**", "/actuator/**")
+                )
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers("/actuator/**", "/admin/api/**").hasRole("ADMIN")
                                 .requestMatchers("/design", "/orders", "/orders/**").hasRole("USER")
                                 .requestMatchers("/", "/**").permitAll()
                 )
@@ -79,6 +95,7 @@ public class SecurityConfig{
                                 .logoutUrl("/logout")
                                 .logoutSuccessUrl("/")
                 )
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 }

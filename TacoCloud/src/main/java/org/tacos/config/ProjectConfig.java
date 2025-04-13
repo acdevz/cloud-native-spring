@@ -4,10 +4,13 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.tacos.models.Ingredient;
 import org.tacos.models.Taco;
+import org.tacos.models.User;
 import org.tacos.repositories.IngredientRepository;
 import org.tacos.repositories.TacoRepository;
+import org.tacos.repositories.UserRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +21,9 @@ public class ProjectConfig {
     @Profile("dev")
     public ApplicationRunner dataLoader(
             IngredientRepository ingredientRepository,
-            TacoRepository tacoRepository
+            TacoRepository tacoRepository,
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder
     ) {
         return (args) -> {
             Ingredient flourTortilla = Ingredient.of( "FLTO", "Flour Tortilla", Ingredient.Type.WRAP);
@@ -56,6 +61,27 @@ public class ProjectConfig {
             taco3.setName("Veg-Out");
             taco3.setIngredients(List.of( flourTortilla, cornTortilla, tomatoes, lettuce, salsa));
             tacoRepository.save(taco3);
+
+            /* Admin User */
+            User adminUser = User.of(
+                    "admin",
+                    passwordEncoder.encode("admin"),
+                    "Chef Acdevs",
+                    "123456",
+                    "555-1234-5678",
+                    List.of("ROLE_USER", "ROLE_ADMIN")
+            );
+            userRepository.save(adminUser);
+
+            /* Regular User */
+            User regularUser = User.of(
+                    "acdevs",
+                    passwordEncoder.encode("4444"),
+                    "Acdevs",
+                    "443322",
+                    "222-1234-5678"
+            );
+            userRepository.save(regularUser);
         };
     }
 }

@@ -2,6 +2,7 @@ package org.tacos.services;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.tacos.models.TacoOrder;
 import org.tacos.repositories.OrderRepository;
 
 @Service
@@ -10,6 +11,11 @@ public class AdminService {
 
     public AdminService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public Iterable<TacoOrder> getAllOrders() {
+        return orderRepository.findAll();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
