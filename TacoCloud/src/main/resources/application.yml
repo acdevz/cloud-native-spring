@@ -53,6 +53,8 @@ server:
     threads:
       max: 10
       min-spare: 5
+  shutdown: graceful
+
 #  ssl:
 #    key-store: mykey.jks
 #    key-password: tooshort
@@ -78,6 +80,8 @@ management:
     health:
       show-details: always
       show-components: always
+      probes:
+        enabled: true
   info:
     env:
       enabled: true

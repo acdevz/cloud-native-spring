@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org</groupId>
-    <artifactId>TacoCloud</artifactId>
+    <artifactId>tacocloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>TacoCloud</name>
     <description>TacoCloud</description>
