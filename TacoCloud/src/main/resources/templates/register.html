@@ -5,15 +5,24 @@
     <title>Register | TacoCloud</title>
 </head>
 <body>
-    <h1>Register</h1>
+    <h1>Register 📜</h1>
     <form method="POST" th:action="@{/register}" id="registerForm">
-        <label for="username">Username: </label> <input type="text" name="username"/><br/>
-        <label for="password">Password: </label> <input type="password" name="password"/><br/>
-        <label for="confirm">Confirm password: </label> <input type="password" name="confirm"/><br/>
-        <label for="fullName">Full name: </label> <input type="text" name="fullName"/><br/>
-        <label for="zip">Zip: </label> <input type="text" name="zip"/><br/>
-        <label for="phoneNumber">Phone: </label> <input type="text" name="phoneNumber"/><br/>
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username" required/><br/>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" required/><br/>
+        <label for="confirm">Confirm password: </label>
+        <input type="password" name="confirm" id="confirm" required/><br/>
+        <label for="fullName">Full name: </label>
+        <input type="text" name="fullName" id="fullName" required/><br/>
+        <label for="zip">Zip: </label>
+        <input type="text" name="zip" id="zip"/><br/>
+        <label for="phoneNumber">Phone: </label>
+        <input type="text" name="phoneNumber" id="phoneNumber"/><br/>
         <input type="submit" value="Register"/>
     </form>
+    <div style="color: red;">
+        <p th:if="${error}">*<span th:text="${error}"></span></p>
+    </div>
 </body>
 </html>

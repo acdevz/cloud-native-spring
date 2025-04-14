@@ -54,6 +54,9 @@ server:
       max: 10
       min-spare: 5
   shutdown: graceful
+  error:
+    whitelabel:
+      enabled: false
 
 #  ssl:
 #    key-store: mykey.jks

@@ -3,6 +3,7 @@ package org.tacos.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.tacos.dto.RegistrationForm;
@@ -30,7 +31,11 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String processRegistration(RegistrationForm form) {
+    public String processRegistration(RegistrationForm form, Model model) {
+        if (userRepository.findByUsername(form.getUsername()) != null) {
+            model.addAttribute("error", "Username already exists");
+            return "register";
+        }
         userRepository.save(form.toUser(passwordEncoder));
         log.info("User registered: {}", form);
         return "redirect:/login";
